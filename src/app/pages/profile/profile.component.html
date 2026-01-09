@@ -1,0 +1,85 @@
+<div class="container fade-in">
+    <div class="glass-card profile-card">
+        <div class="profile-header">
+            <h2>My Profile</h2>
+            <button class="btn btn-primary" (click)="toggleEdit()">
+                {{ isEditing() ? 'Cancel' : 'Edit Profile' }}
+            </button>
+        </div>
+
+        <div *ngIf="isLoading()" class="loading-state">
+            <p>Loading...</p>
+        </div>
+
+        <div *ngIf="!isLoading()" class="profile-content">
+            <!-- View Mode -->
+            <div *ngIf="!isEditing() && user()" class="view-mode">
+                <div class="avatar-section">
+                    <img [src]="user()?.avatar || 'assets/default-avatar.png'" alt="Profile Avatar" class="avatar-lg">
+                </div>
+                <div class="info-section">
+                    <h3 class="user-name">{{ user()?.name }}</h3>
+                    <p class="user-profession">{{ user()?.profession || 'No profession set' }}</p>
+                    <p class="user-bio">{{ user()?.bio || 'No bio available' }}</p>
+                    
+                    <div class="skills-list" *ngIf="user()?.skills?.length">
+                        <span class="skill-tag" *ngFor="let skill of user()?.skills">{{ skill }}</span>
+                    </div>
+
+                    <div class="social-links" *ngIf="user()?.socialLinks">
+                        <a *ngIf="user()?.socialLinks?.github" [href]="user()?.socialLinks?.github" target="_blank" class="social-link">GitHub</a>
+                        <a *ngIf="user()?.socialLinks?.linkedin" [href]="user()?.socialLinks?.linkedin" target="_blank" class="social-link">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Mode -->
+            <form *ngIf="isEditing()" [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="edit-form">
+                
+                <div class="form-group avatar-upload">
+                    <label class="form-label">Profile Image</label>
+                    <div class="image-preview-container">
+                        <img [src]="imagePreview || user()?.avatar || 'assets/default-avatar.png'" class="avatar-preview">
+                        <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" formControlName="name" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Profession</label>
+                        <input type="text" formControlName="profession" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Bio</label>
+                    <textarea formControlName="bio" class="form-input" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Skills (comma separated)</label>
+                    <input type="text" formControlName="skills" class="form-input" placeholder="React, Node.js, TypeScript">
+                </div>
+
+                <div formGroupName="socialLinks" class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">GitHub URL</label>
+                        <input type="text" formControlName="github" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">LinkedIn URL</label>
+                        <input type="text" formControlName="linkedin" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid || isLoading()">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -14,7 +14,11 @@ export const routes: Routes = [
             { path: '', redirectTo: 'projects', pathMatch: 'full' },
             { path: 'projects', component: ProjectListComponent },
             { path: 'projects/new', component: ProjectFormComponent },
-            { path: 'projects/edit/:id', component: ProjectFormComponent }
+            { path: 'projects/edit/:id', component: ProjectFormComponent },
+            {
+                path: 'profile',
+                loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent)
+            }
         ]
     }
 ];

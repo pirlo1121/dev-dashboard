@@ -21,4 +21,9 @@ export class UserService {
     sendContact(data: { name: string; email: string; message: string }): Observable<any> {
         return this.http.post(`${this.apiUrl}/contact`, data);
     }
+    updateUserImage(id: string, file: File): Observable<{ image: string }> {
+        const formData = new FormData();
+        formData.append('image', file);
+        return this.http.patch<{ image: string }>(`${this.apiUrl}/update-image/${id}`, formData, { withCredentials: true });
+    }
 }
