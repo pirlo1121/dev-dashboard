@@ -10,8 +10,15 @@ export interface IUser {
     skills: string[];
     bio?: string;
     avatar?: string;
+    image?: string;
+
     socialLinks: {
         github?: string;
         linkedin?: string;
     };
+}
+
+export interface IUserResponse {
+    ok: boolean;
+    user: IUser;
 }

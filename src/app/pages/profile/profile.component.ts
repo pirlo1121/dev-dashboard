@@ -2,7 +2,7 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../core/services/user.service';
-import { IUser } from '../../core/models/user.model';
+import { IUser, IUserResponse } from '../../core/models/user.model';
 
 @Component({
     selector: 'app-profile',
@@ -38,16 +38,21 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit() {
         this.loadUser();
+        setTimeout(() => {
+            console.log(this.user());
+        }, 1000);
     }
 
     loadUser() {
         this.isLoading.set(true);
+        const userId = localStorage.getItem('id') || '';
         // Assuming 'me' is a valid identifier or handled by the backend
-        this.userService.getUser('me').subscribe({
-            next: (user) => {
-                this.user.set(user);
+        this.userService.getUser(userId).subscribe({
+            next: (user: IUserResponse) => {
+                console.log(user);
+                this.user.set(user.user);
                 this.isLoading.set(false);
-                this.patchForm(user);
+                this.patchForm(user.user);
             },
             error: (err) => {
                 console.error('Failed to load user', err);
@@ -115,6 +120,7 @@ export class ProfileComponent implements OnInit {
                             // Assuming res.image is the new url
                             this.user.set({ ...updatedUser, avatar: res.image }); // Update avatar locally
                             this.finishUpdate();
+                            this.loadUser();
                         },
                         error: (err) => {
                             console.error('Failed to upload image', err);
@@ -127,6 +133,8 @@ export class ProfileComponent implements OnInit {
                 } else {
                     this.user.set(updatedUser);
                     this.finishUpdate();
+                    this.loadUser();
+
                 }
             },
             error: (err) => {

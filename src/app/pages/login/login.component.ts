@@ -27,7 +27,9 @@ export class LoginComponent {
     this.errorMessage.set('');
 
     this.authService.login({ email: this.email, password: this.password }).subscribe({
-      next: () => {
+      next: (data: any) => {
+        localStorage.setItem('id', data.user._id)
+        // console.log(data.user._id);
         this.isLoading.set(false);
         this.router.navigate(['/dashboard']);
       },
