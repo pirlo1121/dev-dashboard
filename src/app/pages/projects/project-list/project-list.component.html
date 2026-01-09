@@ -1,0 +1,36 @@
+<header class="page-header">
+    <div>
+        <h1 class="page-title">Projects</h1>
+        <p class="page-subtitle">Manage your portfolio projects</p>
+    </div>
+    <a routerLink="/dashboard/projects/new" class="btn btn-primary">
+        + New Project
+    </a>
+</header>
+
+<div class="projects-grid">
+    @for (project of projects(); track project._id) {
+    <div class="glass-card project-card">
+        <img [src]="project.image" [alt]="project.name" class="card-image">
+        <div class="card-content">
+            <h3 class="card-title">{{ project.name }}</h3>
+            <p class="card-desc">{{ project.description }}</p>
+
+            <div class="tech-stack">
+                @for (tech of project.stack; track tech) {
+                <span class="badge">{{ tech }}</span>
+                }
+            </div>
+
+            <div class="card-actions">
+                <a [routerLink]="['/dashboard/projects/edit', project._id]" class="btn-text">Edit</a>
+                <button (click)="deleteProject(project._id!)" class="btn-text text-error">Delete</button>
+            </div>
+        </div>
+    </div>
+    } @empty {
+    <div class="empty-state">
+        <p>No projects found. Create your first one!</p>
+    </div>
+    }
+</div>

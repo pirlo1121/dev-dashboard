@@ -1,0 +1,24 @@
+<div class="dashboard-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar glass-card">
+        <div class="logo">
+            <span>Admin</span>Port
+        </div>
+
+        <nav class="nav-menu">
+            <a routerLink="/dashboard/projects" routerLinkActive="active" class="nav-item">
+                Projects
+            </a>
+            <!-- Add more menu items here -->
+        </nav>
+
+        <div class="user-footer">
+            <button (click)="logout()" class="btn btn-logout">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <router-outlet></router-outlet>
+    </main>
+</div>

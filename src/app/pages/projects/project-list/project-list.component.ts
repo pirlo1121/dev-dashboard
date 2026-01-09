@@ -2,7 +2,7 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProjectService } from '../../../core/services/project.service';
-import { IProject, IProjectResponse } from '../../../core/models/project.model';
+import { IProject, IProjectsResponse } from '../../../core/models/project.model';
 
 @Component({
   selector: 'app-project-list',
@@ -22,7 +22,7 @@ export class ProjectListComponent implements OnInit {
 
   loadProjects() {
     this.projectService.getProjects().subscribe({
-      next: (data: IProjectResponse) => this.projects.set(data.projects),
+      next: (data: IProjectsResponse) => this.projects.set(data.projects),
       error: (err) => console.error(err)
     });
   }

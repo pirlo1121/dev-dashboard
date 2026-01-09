@@ -41,14 +41,16 @@ export class ProjectFormComponent implements OnInit {
 
   loadProject(id: string) {
     this.projectService.getProject(id).subscribe(data => {
+      // console.log(data);
+      const project = data.project;
       this.projectForm.patchValue({
-        name: data.name,
-        description: data.description,
-        repository: data.repository,
-        deploy: data.deploy,
-        stack: data.stack
+        name: project.name,
+        description: project.description,
+        repository: project.repository,
+        deploy: project.deploy,
+        stack: project.stack
       });
-      this.stackInput.setValue(data.stack.join(', '));
+      this.stackInput.setValue(project.stack.join(', '));
     });
   }
 

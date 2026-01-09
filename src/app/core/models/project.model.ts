@@ -9,7 +9,12 @@ export interface IProject {
     userId?: string;
 }
 
-export interface IProjectResponse {
+export interface IProjectsResponse {
     ok: boolean;
     projects: IProject[];
+}
+
+export interface IProjectResponse {
+    ok: boolean;
+    project: IProject;
 }

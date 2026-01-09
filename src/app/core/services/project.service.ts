@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IProject, IProjectResponse } from '../models/project.model';
+import { IProject, IProjectResponse, IProjectsResponse } from '../models/project.model';
 
 @Injectable({
     providedIn: 'root'
@@ -10,12 +10,12 @@ export class ProjectService {
     private http = inject(HttpClient);
     private apiUrl = 'http://localhost:3000/api/projects';
 
-    getProjects(): Observable<IProjectResponse> {
-        return this.http.get<IProjectResponse>(this.apiUrl);
+    getProjects(): Observable<IProjectsResponse> {
+        return this.http.get<IProjectsResponse>(this.apiUrl);
     }
 
-    getProject(id: string): Observable<IProject> {
-        return this.http.get<IProject>(`${this.apiUrl}/${id}`);
+    getProject(id: string): Observable<IProjectResponse> { // corregir
+        return this.http.get<IProjectResponse>(`${this.apiUrl}/${id}`);
     }
 
     createProject(formData: FormData): Observable<IProject> {
