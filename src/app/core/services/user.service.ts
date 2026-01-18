@@ -8,7 +8,7 @@ import { IUser, IUserResponse } from '../models/user.model';
 })
 export class UserService {
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:3000/api';
+    private apiUrl = 'https://api.code-musa.com/api';
 
     getUser(id: string): Observable<IUserResponse> {
         return this.http.get<IUserResponse>(`${this.apiUrl}/get/${id}`, { withCredentials: true });

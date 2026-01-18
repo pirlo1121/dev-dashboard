@@ -7,7 +7,7 @@ import { Observable, tap } from 'rxjs';
 })
 export class AuthService {
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:3000/api/auth';
+    private apiUrl = 'https://api.code-musa.com/api/auth';
 
     // Signal to track login state
     isLoggedIn = signal<boolean>(false);

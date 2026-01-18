@@ -8,7 +8,7 @@ import { IProject, IProjectResponse, IProjectsResponse } from '../models/project
 })
 export class ProjectService {
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:3000/api/projects';
+    private apiUrl = 'https://api.code-musa.com/api/projects';
 
     getProjects(): Observable<IProjectsResponse> {
         return this.http.get<IProjectsResponse>(this.apiUrl);
