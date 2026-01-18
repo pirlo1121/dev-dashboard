@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IProject, IProjectResponse, IProjectsResponse } from '../models/project.model';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProjectService {
     private http = inject(HttpClient);
-    private apiUrl = 'https://api.code-musa.com/api/projects';
+    private apiUrl = `${environment.apiUrl}/projects`;
 
     getProjects(): Observable<IProjectsResponse> {
         return this.http.get<IProjectsResponse>(this.apiUrl);

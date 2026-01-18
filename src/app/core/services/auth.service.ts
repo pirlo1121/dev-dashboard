@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
     private http = inject(HttpClient);
-    private apiUrl = 'https://api.code-musa.com/api/auth';
+    private apiUrl = `${environment.apiUrl}/auth`;
 
     // Signal to track login state
     isLoggedIn = signal<boolean>(false);
