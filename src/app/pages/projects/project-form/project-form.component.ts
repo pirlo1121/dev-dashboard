@@ -19,6 +19,7 @@ export class ProjectFormComponent implements OnInit {
 
   projectForm = this.fb.group({
     name: ['', Validators.required],
+    subtitle: [''],
     description: [''],
     repository: [''],
     deploy: [''],
@@ -45,6 +46,7 @@ export class ProjectFormComponent implements OnInit {
       const project = data.project;
       this.projectForm.patchValue({
         name: project.name,
+        subtitle: project.subtitle,
         description: project.description,
         repository: project.repository,
         deploy: project.deploy,
@@ -81,6 +83,8 @@ export class ProjectFormComponent implements OnInit {
     if (this.isEditMode()) {
       const updateData = {
         name: formValue.name!,
+
+        subtitle: formValue.subtitle!,
         description: formValue.description!,
         // Adding others just in case the backend is flexible, otherwise they might be ignored
         repository: formValue.repository!,
@@ -95,6 +99,7 @@ export class ProjectFormComponent implements OnInit {
     } else {
       const formData = new FormData();
       formData.append('name', formValue.name!);
+      formData.append('subtitle', formValue.subtitle || '');
       formData.append('description', formValue.description || '');
       formData.append('repository', formValue.repository || '');
       formData.append('deploy', formValue.deploy || '');

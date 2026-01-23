@@ -1,6 +1,7 @@
 export interface IProject {
     _id?: string;
     name: string;
+    subtitle?: string;
     description?: string;
     image?: string;
     repository?: string;
