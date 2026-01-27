@@ -23,8 +23,8 @@ export class ProjectService {
         return this.http.post<IProject>(this.apiUrl, formData, { withCredentials: true });
     }
 
-    updateProject(id: string, data: Partial<IProject>): Observable<IProject> {
-        return this.http.patch<IProject>(`${this.apiUrl}/${id}`, data, { withCredentials: true });
+    updateProject(id: string, formData: FormData): Observable<IProject> {
+        return this.http.patch<IProject>(`${this.apiUrl}/${id}`, formData, { withCredentials: true });
     }
 
     deleteProject(id: string): Observable<any> {

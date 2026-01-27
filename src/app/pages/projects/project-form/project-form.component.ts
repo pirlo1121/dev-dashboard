@@ -69,10 +69,12 @@ export class ProjectFormComponent implements OnInit {
     if (file) {
       this.selectedFile = file;
     }
+    console.log(this.selectedFile);
   }
 
   onSubmit() {
     if (this.projectForm.invalid) return;
+    console.log(this.projectForm.value);
 
     this.isLoading.set(true);
     // Ensure stack is updated
@@ -81,18 +83,21 @@ export class ProjectFormComponent implements OnInit {
     const formValue = this.projectForm.value;
 
     if (this.isEditMode()) {
-      const updateData = {
-        name: formValue.name!,
+      const formData = new FormData();
+      formData.append('name', formValue.name!);
+      formData.append('subtitle', formValue.subtitle || '');
+      formData.append('description', formValue.description || '');
+      formData.append('repository', formValue.repository || '');
+      formData.append('deploy', formValue.deploy || '');
 
-        subtitle: formValue.subtitle!,
-        description: formValue.description!,
-        // Adding others just in case the backend is flexible, otherwise they might be ignored
-        repository: formValue.repository!,
-        deploy: formValue.deploy!,
-        stack: formValue.stack!
-      };
+      const stack = formValue.stack || [];
+      stack.forEach((s: string) => formData.append('stack', s));
 
-      this.projectService.updateProject(this.projectId!, updateData).subscribe({
+      if (this.selectedFile) {
+        formData.append('image', this.selectedFile);
+      }
+
+      this.projectService.updateProject(this.projectId!, formData).subscribe({
         next: () => this.handleSuccess(),
         error: (err) => this.handleError(err)
       });
